@@ -4,9 +4,10 @@ const db = require('../db');
 exports.getCustomerById = (req, res) => {
   const { id } = req.params;
   const query = `
-    SELECT customer_id, first_name, last_name, email, address, phone
-    FROM customer
-    WHERE customer_id = ?
+    SELECT c.customer_id, c.first_name, c.last_name, c.email, a.address, a.city, a.phone
+FROM customer c
+JOIN address a ON c.address_id = a.address_id
+LIMIT 10 OFFSET ?;
   `;
   db.query(query, [id], (err, results) => {
     if (err) return res.status(500).json({ error: err.message });
