@@ -179,6 +179,7 @@ app.get('/customers', (req, res) => {
         FROM customer c
         JOIN address a ON c.address_id = a.address_id
         JOIN city ct ON a.city_id = ct.city_id
+        ORDER BY c.first_name ASC
         LIMIT ? OFFSET ?;
     `;
     db.query(sql, [pageSize, offset], (err, results) => {
